@@ -1,0 +1,54 @@
+#------------------------------------------------------------
+# University of Sheffield: traininghpc cluster + SLURM
+#------------------------------------------------------------
+
+# Cluster host and scheduler options: the defaults come from
+# Graham at Compute Canada, running SLURM. Other options can
+# be found in the library of snippets,
+# `_includes/snippets_library`. To use one, replace options
+# below with those in `_config_options.yml` from the
+# library. E.g, to customise for Cirrus at EPCC, running
+# PBS, we could replace the options below with those from
+# 
+# _includes/snippets_library/EPCC_Cirrus_pbs/_config_options.yml
+# 
+# If your cluster is not represented in the library, please
+# copy an existing folder, rename it, and customize for your
+# installation. Remember to keep the leading slash on the
+# `snippets` variable below!
+
+snippets: "/snippets_library/Sheffield_traininghpc_slurm"
+
+local:
+  prompt: "[user@laptop ~]$"
+
+remote:
+  name: "traininghpc"
+  login: "traininghpc.shef.ac.uk"
+  host: "training-login1"
+  node: "training-worker1"
+  location: "University of Sheffield"
+  homedir: "/home"
+  user: "yourUsername"
+  prompt: "[yourUsername@training-login1 ~]$ "
+
+sched:
+  name: "SLURM"
+  submit:
+    name: "sbatch"
+    options: ""
+  queue:
+    debug: "debug"  # TODO: change to 'testing' as that's the only partition? 
+    testing: "testing"    # TODO: remove line as 'testing' is the only partition? 
+  status: "squeue"
+  flag:
+    user: "-u yourUsername"
+    interactive: ""
+    histdetail: "-l -j"
+    name: "-J"
+    time: "-t"
+  del: "scancel"
+  interactive: "srun"
+  info: "sinfo"
+  comment: "#SBATCH"
+  hist: "sacct -u yourUsername"
